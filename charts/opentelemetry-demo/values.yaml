@@ -453,8 +453,8 @@ components:
         value: python
       - name: FLAGD_HOST
         value: flagd
-      - name: FLAGD_OFREP_PORT
-        value: "8016"
+      - name: FLAGD_PORT
+        value: "8013"
       - name: OTEL_EXPORTER_OTLP_ENDPOINT
         value: http://$(OTEL_COLLECTOR_NAME):4317
     resources:
@@ -580,11 +580,8 @@ components:
     useDefault:
       env: true
     replicas: 1
-    ports:
-      - name: rpc
-        value: 8013
-      - name: ofrep
-        value: 8016
+    service:
+      port: 8013
     env:
       - name: FLAGD_METRICS_EXPORTER
         value: otel
@@ -598,8 +595,6 @@ components:
       - "start"
       - "--port"
       - "8013"
-      - "--ofrep-port"
-      - "8016"
       - "--uri"
       - "file:./etc/flagd/demo.flagd.json"
     mountedEmptyDirs:
